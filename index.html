@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RevPAR Lab: simulador de ocupação, ADR e RevPAR</title>
+    <meta name="description" content="Simule ocupação, diária média, RevPAR, TRevPAR e GOPPAR do seu hotel e descubra a ocupação mínima para fechar o mês no azul." />
+    <meta name="theme-color" content="#0e0d0b" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230e0d0b'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%236ec6ff'/%3E%3C/svg%3E" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="top">
+      <a class="brand" href="#top" aria-label="Início"><i></i>RevPAR/lab</a>
+      <nav aria-label="Principal">
+        <a href="#lab">Simulador</a>
+        <a href="#mapa">Mapa</a>
+        <a href="#siglas">Siglas</a>
+        <a href="https://github.com/luannrpn/revpar-lab" rel="noopener">GitHub ↗</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <p class="eyebrow" data-reveal>Open source · gestão de receita para hotéis independentes</p>
+        <h1 class="display" data-lines>Ocupação cheia não é receita boa.</h1>
+        <div class="hero-foot" data-reveal>
+          <p class="lead">Mexa em ocupação e diária e veja RevPAR, TRevPAR, GOPPAR e o ponto de equilíbrio mudarem na hora.</p>
+          <a class="btn magnetic" href="#lab">Abrir simulador <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+
+      <section id="lab" aria-labelledby="lab-title">
+        <h2 class="section-title" id="lab-title" data-lines>Seu hotel em números</h2>
+        <div class="grid-2">
+          <form class="panel stack sticky" autocomplete="off" onsubmit="return false">
+            <div class="field">
+              <div class="range-head"><label for="occ">Ocupação</label><output id="occ-out" for="occ">70%</output></div>
+              <input id="occ" type="range" min="0" max="100" step="1" value="70" />
+            </div>
+            <div class="field">
+              <div class="range-head"><label for="adr">Diária média (ADR)</label><output id="adr-out" for="adr">R$ 300</output></div>
+              <input id="adr" type="range" min="80" max="1500" step="10" value="300" />
+            </div>
+            <div class="field">
+              <label for="rooms">Quartos</label>
+              <div class="input-wrap"><input id="rooms" type="number" inputmode="numeric" min="1" step="1" value="20" /><span>UHs</span></div>
+            </div>
+            <div class="field">
+              <label for="anc">Receita extra por quarto ocupado</label>
+              <div class="input-wrap"><span>R$</span><input id="anc" type="number" inputmode="decimal" min="0" step="1" value="40" /></div>
+            </div>
+            <div class="field">
+              <label for="cpor">Custo variável por quarto ocupado</label>
+              <div class="input-wrap"><span>R$</span><input id="cpor" type="number" inputmode="decimal" min="0" step="1" value="80" /></div>
+            </div>
+            <div class="field">
+              <label for="fixed">Custos fixos por mês</label>
+              <div class="input-wrap"><span>R$</span><input id="fixed" type="number" inputmode="decimal" min="0" step="100" value="60000" /></div>
+            </div>
+          </form>
+
+          <div class="panel" aria-live="polite">
+            <p class="label">RevPAR · receita por quarto disponível</p>
+            <p class="big" id="revpar">R$ 0</p>
+            <p class="sub" id="revpar-sub"></p>
+            <ul class="stats" id="stats"></ul>
+            <div class="be" id="be"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mapa" aria-labelledby="mapa-title">
+        <h2 class="section-title" id="mapa-title" data-lines>Mapa de sensibilidade do RevPAR</h2>
+        <p class="lead" data-reveal>Cada célula é o RevPAR para uma ocupação (colunas) e uma variação na diária (linhas), a partir da sua diária atual.</p>
+        <div class="heat-wrap" data-reveal><table class="heat" id="heat"></table></div>
+      </section>
+
+      <section id="siglas" aria-labelledby="siglas-title">
+        <h2 class="section-title" id="siglas-title" data-lines>O que cada sigla mede</h2>
+        <dl class="gloss">
+          <div><dt>ADR</dt><dd>Diária média: receita de hospedagem ÷ quartos vendidos.</dd></div>
+          <div><dt>RevPAR</dt><dd>Receita por quarto disponível: ADR × ocupação. Mostra se preço e ocupação estão equilibrados.</dd></div>
+          <div><dt>TRevPAR</dt><dd>Como o RevPAR, mas somando receitas extras (café, bar, spa).</dd></div>
+          <div><dt>GOPPAR</dt><dd>Lucro operacional bruto por quarto disponível: o que sobra depois dos custos.</dd></div>
+          <div><dt>CPOR</dt><dd>Custo por quarto ocupado: limpeza, enxoval, amenities, energia.</dd></div>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <p>Feito por <strong>Luann Neves</strong> · MIT · <a href="https://github.com/luannrpn/revpar-lab" rel="noopener">código-fonte</a></p>
+      <p class="hint">Simulação simplificada para estudo, com custos fixos mensais e mês de 30 dias.</p>
+    </footer>
+  </body>
+</html>
